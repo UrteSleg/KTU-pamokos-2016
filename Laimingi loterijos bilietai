@@ -1,0 +1,137 @@
+//Laimingi loterijos bilietai
+#include <iostream>
+#include <iomanip>
+using namespace std;
+//-----------------------------------------
+void Skaitymas(int & n, int bilietai[], int teisingi[], int neteisingi[]);
+void Trinti(int & n, int bilietai[], int a);
+void Iterpti(int & m, int pataisyti[], int a);
+void Isvesti(int n, int m, int bilietai[], int pataisyti[]);
+int Atbulas(int a);
+int Palindromas(int a);
+int Taisyti(int a, int neteisingi[], int teisingi[]);
+
+
+//-----------------------------------------
+int main()
+{
+ int n,  m=0, bilietai[100], pataisyti[100], neteisingi[10], teisingi[10];
+    Skaitymas(n, bilietai, teisingi, neteisingi);
+    for(int i = 0;i<n;i++)
+    {
+        if(Palindromas(bilietai[i]))
+        {
+            Iterpti(m, pataisyti, bilietai[i]);
+        }
+        else
+        {
+            Iterpti(m, pataisyti, Taisyti(bilietai[i], neteisingi, teisingi));
+        }
+    }
+    for(int i = 0;i<n;i++)
+    {
+        if(!Palindromas(bilietai[i]))
+        {
+            Trinti(n, bilietai, bilietai[i]);
+        }
+    }
+    Isvesti(n, m, bilietai, pataisyti);
+      return 0;
+}
+//-----------------------------------------
+void Skaitymas(int & n, int bilietai[], int teisingi[], int neteisingi[])
+{
+    cin >> n;
+    for(int i = 0;i<n;i++)
+    {
+        cin >> bilietai[i];
+    }
+    for(int i = 0;i<10;i++)
+    {
+        cin >> teisingi[i];
+        cin >> neteisingi[i];
+    }
+}
+ 
+void Trinti(int & n, int bilietai[], int a)
+{
+    int vieta;
+ 
+    for(int i = 0;i<n;i++)
+    {
+        if(bilietai[i]==a)
+        {
+            vieta=i;
+        }
+    }
+    for (int i = vieta; i < n; ++i)
+    {
+        bilietai[i] = bilietai[i + 1];
+    }
+    n--;
+}
+ 
+void Iterpti(int & m, int pataisyti[], int a)
+{
+    pataisyti[m]=a;
+    m++;
+}
+ 
+int Atbulas(int a)
+{
+    int atbulas=0, liekana=0;
+ 
+    while(a != 0)
+    {
+        liekana = a%10;
+        atbulas = atbulas*10 + liekana;
+        a /= 10;
+    }
+ 
+    return atbulas;
+}
+ 
+int Palindromas(int a)
+{
+    if(a==Atbulas(a))
+    {
+        return 1;
+    }
+ 
+    return 0;
+}
+ 
+int Taisyti(int a, int neteisingi[], int teisingi[])
+{
+    int b=a%10;
+    for(int i = 0;i<10;i++)
+    {
+        if(b==neteisingi[i])
+        {
+            a=a/10*10+teisingi[i];
+            break;
+        }
+    }
+    return a;
+}
+ 
+void Isvesti(int n, int m, int bilietai[], int pataisyti[])
+{
+    for(int i = 0;i<n;i++)
+    {
+        cout << bilietai[i] << " ";
+    }
+    cout << endl;
+    for(int i = 0;i<m;i++)
+    {
+        cout << pataisyti[i] << " ";
+    }
+   cout<<endl;
+}
+
+
+
+
+
+
+
