@@ -1,0 +1,39 @@
+//Bulviakasis
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+void Skaiciavimai(double kiek_bulviu, int talkininkai, int & dienos, 
+                  int & visi_talkininkai, double & viso_bulviu, 
+                  double & vieno_vidurkis);
+
+int main ()
+{
+  //Kintamųjų aprašai
+   double kiek_bulviu=1.0, vieno_vidurkis=0.0, viso_bulviu=0.0; 
+   int talkininkai=1, dienos=0, visi_talkininkai=0; 
+   //Pradinių duomenų įvedimas ir programos veiksmai
+   while (true)
+   {
+      cin>>kiek_bulviu>>talkininkai;
+      if (kiek_bulviu==0 || talkininkai==0) break;
+      else Skaiciavimai(kiek_bulviu, talkininkai, dienos, visi_talkininkai, viso_bulviu, vieno_vidurkis);
+   }
+   //Rezultatų išvedimas į ekraną
+   cout<<dienos<<endl;
+   cout<<fixed<<setprecision(2)<<viso_bulviu<<endl;
+   cout<<fixed<<setprecision(2)<<vieno_vidurkis<<endl;
+   return 0;
+}
+//Funkcija, grąžinanti apskaičuotas reikšmes per parametrus
+void Skaiciavimai(double kiek_bulviu, int talkininkai, int & dienos, 
+                  int & visi_talkininkai, double & viso_bulviu, 
+                  double & vieno_vidurkis)
+ 
+{ 
+   dienos++;
+   viso_bulviu+=kiek_bulviu;
+   visi_talkininkai+=talkininkai;
+   vieno_vidurkis=viso_bulviu/visi_talkininkai;
+}
