@@ -1,0 +1,117 @@
+//Paguodos savaitė
+#include <iostream>
+#include<cmath>
+//-----------------------------------------------------
+using namespace std;
+void Ivedimas(int n, int gpazymiai[], int pazymiai[][10]);
+double Vidurkis(int a, int gpazymiai[], int pazymiai[][10]);
+int blogiausioVieta(int a, int gpazymiai[], int pazymiai[][10]);
+bool Atsiskaites(int a, int gpazymiai[], int pazymiai[][10]);
+void naujasSarasas(int n, int gpazymiai[], int pazymiai[][10], bool pakeitimai[]);
+void Isvedimas(int a, int gpazymiai[], int pazymiai[][10], bool pakeitimai[]);
+//-----------------------------------------------------
+int main()
+{
+int n, gpazymiai[10], pazymiai[100][10], npazymiai[100][10];
+    bool pakeitimai[100];
+    cin >> n;
+    Ivedimas(n, gpazymiai, pazymiai);
+    naujasSarasas(n, gpazymiai, pazymiai, pakeitimai);
+    for(int i = 0;i<n;i++)
+    {
+        Isvedimas(i, gpazymiai, pazymiai, pakeitimai);
+    }
+   return 0;
+}
+//-----------------------------------------------------
+void Ivedimas(int n, int gpazymiai[], int pazymiai[][10])
+{
+    for(int i = 0;i<n;i++)
+    {
+        cin >> gpazymiai[i];
+        for(int j = 0;j<gpazymiai[i];j++)
+        {
+            cin >> pazymiai[i][j];
+        }
+    }
+}
+ 
+double Vidurkis(int a, int gpazymiai[], int pazymiai[][10])
+{
+    double vid=0;
+    int dal=0;
+ 
+    for(int i = 0;i<gpazymiai[a];i++)
+    {
+        vid+=pazymiai[a][i];
+        dal++;
+    }
+    vid /= dal;
+ 
+    return vid;
+}
+ 
+int blogiausioVieta(int a, int gpazymiai[], int pazymiai[][10])
+{
+    int vieta, maz=11;
+ 
+    for(int i = 0;i<gpazymiai[a];i++)
+    {
+        if(pazymiai[a][i]<maz)
+        {
+            maz=pazymiai[a][i];
+            vieta=i;
+        }
+    }
+ 
+    return vieta;
+}
+ 
+bool Atsiskaites(int a, int gpazymiai[], int pazymiai[][10])
+{
+    for(int i = 0;i<gpazymiai[a];i++)
+    {
+        if(pazymiai[a][i]==0)
+        {
+            return false;
+        }
+    }
+ 
+    return true;
+}
+ 
+void naujasSarasas(int n, int gpazymiai[], int pazymiai[][10], bool pakeitimai[])
+{
+    int vidurkis;
+    for(int i = 0;i<n;i++)
+    {
+        if(Atsiskaites(i, gpazymiai, pazymiai))
+        {
+            vidurkis = (int)(Vidurkis(i, gpazymiai, pazymiai)+0.5);
+            pazymiai[i][blogiausioVieta(i, gpazymiai, pazymiai)]=vidurkis;
+ 
+            pakeitimai[i]=true;
+        }
+        else
+        {
+            pakeitimai[i]=false;
+        }
+    }
+}
+ 
+void Isvedimas(int a, int gpazymiai[], int pazymiai[][10], bool pakeitimai[])
+{
+    if(pakeitimai[a]==true)
+    {
+        for(int i = 0;i<gpazymiai[a];i++)
+        {
+            cout << pazymiai[a][i] << " ";
+        }
+       cout<<endl;
+    }
+    else
+    {
+        cout << "Pakeitimai nebuvo atlikti" << endl;
+    }
+}
+
