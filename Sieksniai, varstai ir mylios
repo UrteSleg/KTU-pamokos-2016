@@ -1,0 +1,53 @@
+//Sieksniai, varstai ir mylios
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <fstream>
+using namespace std;
+
+void Suma (int s1, int v1, int m1, int s2, int v2, int m2, 
+           int & s, int & v, int & m);
+void Skirtumas (int s1, int v1, int m1, int s2, int v2, int m2, 
+                int & s, int & v, int & m);
+
+int main ()
+{
+   //Kintamųjų aprašai
+   int s1, s2, v1, v2, m1, m2,n;
+   int ss, sv, sm;
+   int skm, sks, skv;
+   //Programos veiksmai
+   cin>>n;
+   for(int i=0; i<n; i++)
+   {
+      cin>>m1>>v1>>s1>>m2>>v2>>s2;
+      Suma (s1, v1, m1, s2, v2, m2, ss, sv, sm); 
+      Skirtumas (s1, v1, m1, s2, v2, m2, sks, skv, skm);
+      cout<<sm<<" "<<sv<<" "<<ss<<" "<<skm<<" "<<skv<<" "<<sks<<endl;
+   }
+   return 0;
+}
+//Funkcijos, grąžinančios apskaičiuotas reikšmes per parametrus
+void Suma (int s1, int v1, int m1, int s2, int v2, int m2, 
+           int & s, int & v, int & m)
+{  
+   int sm, sv, sk1, l, sk2, ss;
+   sk1=((m1*7+v1)*500)+s1;
+   sk2=((m2*7+v2)*500)+s2;
+   l=sk1+sk2;
+   m=l/3500;
+   v=l%3500/500;
+   s=l%3500%500;
+}
+void Skirtumas (int s1, int v1, int m1, int s2, int v2, int m2, 
+                int & s, int & v, int & m)
+{
+   int skm, sks, sk1, l, sk2, skv;
+   sk1=(m1*3500)+(v1*500)+s1;
+   sk2=(m2*3500)+(v2*500)+s2;
+   if(sk1>sk2) l=sk1-sk2;
+   else l=sk2-sk1;
+   m=l/3500;
+   v=l%3500/500;
+   s=l%3500%500;
+}
