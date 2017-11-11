@@ -1,0 +1,158 @@
+//Vasaros kelionės
+#include <iostream>
+using namespace std;
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+// Vieta funkcijų prototipams
+void Skaitymas(string D1Pav[], int D1K[], int D1T[], int &k1, string D2Pav[], int D2K[],
+               int D2T[], int &k2, string D3Pav[], int D3K[], int D3T[], 
+               int &k3, string DPav[], int DK[], int DT[], int &k, string VPav[], 
+               int VT[], int &n);
+void Rasymas( string DD[], int DKK[], int DTK[], int KD, string tinka, string nera);
+int Trumpiausia(int VT[], int n) ;
+int Ilgiausia(int VT[], int n);
+void Rasymas1(string VPav[], int VT[], int n, int kokia);
+int Suma(int a, int b);
+int Trukme( int n, int VT[]);
+bool Tikrinimas( int s1 , int s2, int s3, int kel );
+//---------------------------------------------------------------------------------
+int main ()
+{
+   string D1Pav[100], D2Pav[100], D3Pav[100], DPav[100], VPav[100];
+   int D1T[100], D2T[100], D3T[100], DT[100], VT[100],
+       D1K[100], D2K[100], D3K[100], DK[100];
+   int k1, k2, k3, k, n;
+   Skaitymas(D1Pav, D1K, D1T, k1, D2Pav, D2K, D2T, k2, D3Pav, D3K, D3T, k3, DPav, DK, DT, k, VPav, VT, n);
+   Rasymas(D1Pav, D1K, D1T, k1, "Pirmam draugui tinkamos kelionės:", "Pirmam draugui tinkamų kelionių nėra.");
+   Rasymas(D2Pav, D2K, D2T, k2, "Antram draugui tinkamos kelionės:", "Antram draugui tinkamų kelionių nėra.");
+   Rasymas(D3Pav, D3K, D3T, k3, "Trečiam draugui tinkamos kelionės:", "Trečiam draugui tinkamų kelionių nėra.");
+   Rasymas(DPav, DK, DT, k, "Visiems draugams tinkamos kelionės:", "Visiems draugams tinkamų kelionių nėra.");
+   int trumpa = Trumpiausia(VT, n);
+   int ilga = Ilgiausia(VT, n);
+   cout << "***" << endl;
+   cout << "Trumpiausios kelionės:" << endl;
+   Rasymas1(VPav, VT, n, trumpa);
+   cout << "ilgiausios kelionės:" << endl;
+   Rasymas1(VPav, VT, n, ilga);
+   return 0;
+}
+
+//---------------------------------------------------------------------------------
+void Skaitymas(string D1Pav[], int D1K[], int D1T[], int &k1, string D2Pav[], int D2K[],
+               int D2T[], int &k2, string D3Pav[], int D3K[], int D3T[], 
+               int &k3, string DPav[], int DK[], int DT[], int &k, string VPav[], 
+               int VT[], int &n)
+{
+   int a1,a2,a3;
+   cin>>a1>>a2>>a3;
+   cin>>n;
+   k1=0;
+   k2=0;
+   k3=0;
+   k=0;
+   int a,b,S[100];
+   for (int i=0; i<n; i++)
+   {     
+    cin>>VPav[i]>>VT[i]>>a>>b;
+    S[i]=Suma(a,b);
+   }
+   for (int i=0; i<n; i++)
+      {
+      if (S[i]<=a1){
+                     D1Pav[k1]=VPav[i];
+                     D1T[k1]=VT[i];
+                     D1K[k1]=S[i];
+                     k1++;
+      } 
+   if (S[i]<=a2) {
+                     D2Pav[k2]=VPav[i];
+                     D2T[k2]=VT[i];
+                     D2K[k2]=S[i];
+                     k2++;
+                 }
+   if (S[i]<=a3) {
+                     D3Pav[k3]=VPav[i];
+                     D3T[k3]=VT[i];
+                     D3K[k3]=S[i];
+                     k3++;
+                 }
+   if(Tikrinimas(a1 ,a2, a3,S[i]))
+   {
+      DPav[k]=VPav[i];
+      DT[k]=VT[i];
+      DK[k]=S[i];
+      k++;
+  }
+   }
+}
+void Rasymas( string DD[], int DKK[], int DTK[], int KD, 
+             string tinka, string nera)
+{
+   if (KD>0)
+   {
+      cout<<tinka<<endl;
+      for(int i = 0;i<KD;i++)
+      {
+      cout<<DD[i]<<" "<<DTK[i]<<" "<<DKK[i]<<endl;
+      }
+      cout<<"Vidutinė kelionės trukmė dienomis yra: "<<Trukme(KD,DTK)<<endl;
+     
+   }
+   else cout<<nera<<endl;
+}
+int Trumpiausia(int VT[], int n)
+{
+    int a = 1000;
+  // int b = 0;
+    for(int i = 0;i<n;i++)
+    {
+        if(VT[i]<a)
+        {
+            a=VT[i];
+          //  b=i;
+        }
+    }
+    return a;
+}
+int Ilgiausia(int VT[], int n)
+{
+   int a =0 ;
+   //int c = 0;
+    for(int i = 0;i<n;i++)
+    {
+        if(VT[i]>a)
+        {
+            a=VT[i];
+           // c=i;
+        }
+    }
+    return a;
+}
+void Rasymas1(string VPav[], int VT[], int n, int kokia)
+{
+   
+      for(int i = 0;i<n;i++)
+             if(VT[i]==kokia)cout << VPav[i] << endl;
+      
+}
+int Suma( int a, int b)
+{
+  return a+b;
+}
+
+int Trukme( int n, int VT[])
+{
+  int t=0;
+    for(int i = 0;i<n;i++)
+    {
+        t+=VT[i];
+      
+    }
+   return t/n;
+}
+
+bool Tikrinimas( int s1 , int s2, int s3, int kel )
+{
+   if( kel<=s1 && kel<=s2 && kel<=s3) return true;
+  else return false;
+}
+
