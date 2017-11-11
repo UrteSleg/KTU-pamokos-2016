@@ -1,0 +1,109 @@
+//Rezultatyviausias žaidėjas
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+void Ivedimas(int &n, int &z, int N[], int IN[]);
+int Did(int IN[], int N[], int z);
+void Rezultatai(int IN[], int N[], int z);
+ 
+int main()
+{
+    setlocale(LC_ALL, "Lithuanian");
+ 
+    int n; // rungtynių skaičius
+    int N[100]; // žaidėjų numerių masyvas
+    int IN[100]; // įvarčių masyvas
+    int z = 0; // skirtingų žaidėjų skaičius įmušusių bent 1 įvartį
+    int pag = 0; // padės rikiuojant žaidėjų numerius didėjimo tvarka
+ 
+    Ivedimas(n, z, N, IN);
+ 
+    for(int i = 0; i < z; i++){
+        for(int j = i; j < z; j++){
+            if(N[i] > N[j]){
+                pag = N[i];
+                N[i] = N[j];
+                N[j] = pag;
+ 
+                pag = IN[i];
+                IN[i] = IN[j];
+                IN[j] = pag;
+            }
+        }
+    }
+ 
+   Rezultatai(IN, N, z);
+ 
+    return 0;
+}
+ 
+void Ivedimas(int &n, int &z, int N[], int IN[]){
+    int k; // per rungtynes įspirti įvarčiai
+    int nr;
+    int pagalb = 0; // padės tikrinant ar toks žaidėjas jau buvo įspyręs įvartį
+
+    cin >> n;
+    while((n <= 0) || (n > 10)){
+
+        cin >> n;
+    }
+ 
+    for(int i = 0; i < n; i++){
+
+        cin >> k;
+ 
+
+        for(int j = 0; j < k; j++){
+            cin >> nr;
+            while((nr < 0) || (nr > 99)){
+ 
+                cin >> nr;
+            }
+ 
+            if(z == 0){
+                N[z] = nr;
+                IN[z] = 0;
+                IN[z]++;
+                z++;
+            }else{
+                for(int x = 0; x < z; x++){
+                    if(N[x] == nr){
+                        IN[x]++;
+                        pagalb++;
+                    }
+                }
+                if(pagalb == 0){
+                        N[z] = nr;
+                        IN[z] = 0;
+                        IN[z]++;
+                        z++;
+                }
+            }
+            pagalb = 0;
+        }
+    }
+}
+ 
+int Did(int IN[], int N[], int z){
+    int didz = 0;
+    int vieta = 0;
+ 
+    for(int i = 0; i < z; i++){
+        if(IN[i] > didz){
+            didz = IN[i];
+            vieta = i;
+        }
+    }
+ 
+    return N[vieta];
+}
+ 
+ 
+void Rezultatai(int IN[], int N[], int z){
+    for(int i = 0; i < z; i++){
+        cout << N[i] << " " << IN[i] << " ";
+    }
+    cout << endl << Did(IN, N, z)<<endl;
+}
+
