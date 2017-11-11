@@ -1,0 +1,110 @@
+//Sodo apšvietimas
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <fstream>
+#include <string>
+using namespace std;
+//-----------------------------------------------------------------
+//Funkcijų prototipai
+void Ivedimas(int & n, int LED[][2]);
+void Trinti(int & n, int LED[][2], int a);
+void naujasSarasas(int & n, int LED[][2], int nLED[], int & nvk);
+void Isvedimas(int n, int LED[][2], int nLED[], int nvk, bool a);
+//-----------------------------------------------------------------
+int main ()
+{
+    int n, LED[100][2], nLED[100], nvk=0;
+    Ivedimas(n, LED);
+    naujasSarasas(n, LED, nLED, nvk);
+    Isvedimas(n, LED, nLED, nvk, false);
+    Isvedimas(n, LED, nLED, nvk, true);
+ 
+   return 0;
+}
+//-----------------------------------------------------------------
+//Funkcijos
+void Ivedimas(int & n, int LED[][2])
+{
+    cin >> n;
+    for(int i = 0;i<n;i++)
+    {
+        cin >> LED[i][0];
+        cin >> LED[i][1];
+    }
+}
+ 
+void Trinti(int & n, int LED[][2], int a)
+{
+    int vieta;
+ 
+    for(int i = 0;i<n;i++)
+    {
+        if(LED[i][0]==a)
+        {
+            vieta=i;
+        }
+    }
+    for (int i = vieta; i < n; i++)
+    {
+        LED[i][0] = LED[i + 1][0];
+        LED[i][1] = LED[i + 1][1];
+    }
+    n--;
+}
+ 
+void naujasSarasas(int & n, int LED[][2], int nLED[], int & nvk)
+{
+    for(int i = 0;i<n;i++)
+    {
+        if(LED[i][1]==0)
+        {
+            nLED[nvk]=LED[i][0];
+            nvk++;
+        }
+    }
+    for(int i = 0;i<n;i++)
+    {
+        if(LED[i][1]==0)
+        {
+            Trinti(n, LED, LED[i][0]);
+            i--;
+        }
+    }
+}
+ 
+void Isvedimas(int n, int LED[][2], int nLED[], int nvk, bool a)
+{
+    if(a==false)
+    {
+        if(n>0)
+        {
+            for(int i = 0;i<n;i++)
+            {
+                cout << LED[i][0] << " ";
+            } 
+           cout << endl;
+        }
+        else
+        {
+            cout << "NĖRA" << endl;
+        }
+       
+    }
+    else
+    {
+        if(nvk>0)
+        {
+            for(int i = 0;i<nvk;i++)
+            {
+                cout << nLED[i] << " ";
+            }
+           cout<< endl;
+        }
+        else
+        {
+            cout << "NĖRA"<<endl;
+        }
+       
+    }
+}
