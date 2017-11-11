@@ -1,0 +1,116 @@
+//Vairuotojų pažymėjimai
+
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <fstream>
+#include <string>
+
+
+using namespace std;
+//-----------------------------------------------------------------
+void ivedimas(int & n, int & pmetai, int & pmenuo, int & pdiena, long long asmkodas[], int metai[], int menuo[], int diena[]);
+bool galioja(int a, int pmetai, int pmenuo, int pdiena, int metai[], int menuo[], int diena[]);
+void Trinti(int & n, long long asmkodas[], int metai[], int menuo[], int diena[], int a);
+void naujasSarasas(int n, int & m, long long asmkodas[], long long nasmkodas[], int metai[], int nmetai[], int menuo[], int nmenuo[], int diena[], int ndiena[], int pmetai, int pmenuo, int pdiena);
+void rodyti(int n, int m, long long asmkodas[], long long nasmkodas[], int metai[], int nmetai[], int menuo[], int nmenuo[], int diena[], int ndiena[]);
+//-----------------------------------------------------------------
+int main ()
+{
+int n, m=0, pmetai, pmenuo, pdiena, metai[100], menuo[100], diena[100], nmetai[100], nmenuo[100], ndiena[100];
+    long long asmkodas[100], nasmkodas[100];
+ 
+    ivedimas(n, pmetai, pmenuo, pdiena, asmkodas, metai, menuo, diena);
+    naujasSarasas(n, m, asmkodas, nasmkodas, metai, nmetai, menuo, nmenuo, diena, ndiena, pmetai, pmenuo, pdiena);
+    for(int i = 0;i<n;i++)
+    {
+        if(!galioja(i, pmetai, pmenuo, pdiena, metai, menuo, diena))
+        {
+            Trinti(n, asmkodas, metai, menuo, diena, i);
+            i--;
+        }
+    }
+    rodyti(n, m, asmkodas, nasmkodas, metai, nmetai, menuo, nmenuo, diena, ndiena);
+
+   return 0;
+}
+//-----------------------------------------------------------------
+void ivedimas(int & n, int & pmetai, int & pmenuo, int & pdiena, long long asmkodas[], int metai[], int menuo[], int diena[])
+{
+    cin >> n;
+    cin >> pmetai;
+    cin >> pmenuo;
+    cin >> pdiena;
+    for(int i = 0;i<n;i++)
+    {
+        cin >> asmkodas[i];
+        cin >> metai[i];
+        cin >> menuo[i];
+        cin >> diena[i];
+    }
+}
+ 
+bool galioja(int a, int pmetai, int pmenuo, int pdiena, int metai[], int menuo[], int diena[])
+{
+    if((pmetai*12*30+pmenuo*30+pdiena)-(metai[a]*12*30+menuo[a]*30+diena[a])<3600)
+    {
+        return true;
+    }
+ 
+    return false;
+}
+ 
+void Trinti(int & n, long long asmkodas[], int metai[], int menuo[], int diena[], int a)
+{
+    for (int i = a; i < n; ++i)
+    {
+        asmkodas[i] = asmkodas[i + 1];
+        metai[i] = metai[i + 1];
+        menuo[i] = menuo[i + 1];
+        diena[i] = diena[i + 1];
+    }
+    n--;
+}
+ 
+void naujasSarasas(int n, int & m, long long asmkodas[], long long nasmkodas[], int metai[], int nmetai[], int menuo[], int nmenuo[], int diena[], int ndiena[], int pmetai, int pmenuo, int pdiena)
+{
+    for(int i = 0;i<n;i++)
+    {
+        if(!galioja(i, pmetai, pmenuo, pdiena, metai, menuo, diena))
+        {
+            nmetai[m]=metai[i];
+            nmenuo[m]=menuo[i];
+            ndiena[m]=diena[i];
+            nasmkodas[m]=asmkodas[i];
+            m++;
+        }
+    }
+}
+ 
+void rodyti(int n, int m, long long asmkodas[], long long nasmkodas[], int metai[], int nmetai[], int menuo[], int nmenuo[], int diena[], int ndiena[])
+{
+    cout << "Galiojantys:" << endl;
+    if(n==0)
+    {
+        cout << "NĖRA" << endl;
+    }
+    else
+    {
+        for(int i = 0;i<n;i++)
+        {
+            cout << asmkodas[i] << " " << metai[i] << " " << menuo[i] << " " << diena[i] << endl;
+        }
+    }
+    cout << "Negaliojantys:" << endl;
+    if(m==0)
+    {
+        cout << "NĖRA" << endl;
+    }
+    else
+    {
+        for(int i = 0;i<m;i++)
+        {
+            cout << nasmkodas[i] << " " << nmetai[i] << " " << nmenuo[i] << " " << ndiena[i] << endl;
+        }
+    }
+}
