@@ -1,0 +1,53 @@
+//Laimingi skaičiai
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+
+
+using namespace std;
+//----------------------------------------------------
+int KiekSkaitmenu(long x);
+long Suma(long x);
+bool laimingas( int i);
+//----------------------------------------------------
+int main ()
+{
+   int m, n;
+   cin >> m >> n;
+   //Programos veiksmai
+   int k=0;
+   for ( int i=m; i<=n; i++)      
+      if (laimingas(i)){ cout <<i<<endl;k++;}
+  
+   return 0;
+}
+//----------------------------------------------------
+
+int KiekSkaitmenu(long x){
+   int k=0;
+   while(x>0){
+      x/=10;
+      k++;
+   }
+   return k;
+}
+   long Suma(long x) {
+   long k=0;
+   while(x>0){
+      
+      k+=(x%10);
+      x/=10;
+   }
+   return k;
+   }
+ bool laimingas( int i){
+    int s,d,pr,pb;
+    s=KiekSkaitmenu(i);
+   if(s%2!=0) return false;
+   else {d=int(round((pow(10,s/2))));
+                 pr=i/d;
+                 pb=i%d;
+                 if(Suma(pr)==Suma (pb)) return true;
+         else return false;
+        }
+ }
