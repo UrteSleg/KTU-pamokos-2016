@@ -1,0 +1,116 @@
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <fstream>
+#include <string>
+
+using namespace std;
+void Ivedimas(int &n, int &kbank, int &k, int B[], int IB[]);
+int Suma(int k, int B[], int IB[]);
+void Rezultatas(int kbank, int k, int B[], int IB[]);
+ 
+int main()
+{
+    setlocale(LC_ALL, "Lithuanian");
+ 
+    int n; // turistų skaičius
+    int kbank = 0; // bendras banknotų skaičius
+    int B[100]; // banknotų rūšys
+    int IB[100]; // baknotų kiekis išskirstytas po rūšį
+    int k = 0; // kiek skirtingų banknotų yra
+    int pagal = 0; // padės rikiuojant didėjimo tvarka banknotus
+ 
+    Ivedimas(n, kbank, k, B, IB);
+ 
+    for(int i = 0; i < k; i++){
+        for(int j = i; j < k; j++){
+            if(B[i] > B[j]){
+                pagal = B[i];
+                B[i] = B[j];
+                B[j] = pagal;
+ 
+                pagal = IB[i];
+                IB[i] = IB[j];
+                IB[j] = pagal;
+            }
+        }
+    }
+ 
+    Rezultatas(kbank, k, B, IB);
+ 
+    return 0;
+}
+ 
+void Ivedimas(int &n, int &kbank, int &k, int B[], int IB[]){
+ 
+    int bank; // Asmens banknotų skaičius
+    int pinigas = 0;
+    int kiekis = 0;
+    int pagalb = 0; // padės tikrint ar tokios rūšies banknotas jau buvo
+ 
+
+    cin >> n;
+    while((n <= 0) || (n > 100)){
+
+        cin >> n;
+    }
+ 
+    for(int i = 0; i < n; i++){
+
+        cin >> bank;
+ 
+        kbank += bank;
+ 
+        while(bank != 0){
+
+            cin >> pinigas;
+            while((pinigas <= 0) || (pinigas > 50)){
+                
+                cin >> pinigas;
+            }
+
+            cin >> kiekis;
+ 
+            if(k == 0){
+                B[k] = pinigas;
+                IB[k] = 0;
+                IB[k] += kiekis;
+                k++;
+            }else{
+                for(int j = 0; j < k; j++){
+                    if(B[j] == pinigas){
+                        IB[j] += kiekis;
+                        pagalb++;
+                    }
+                }
+                if(pagalb == 0){
+                    B[k] = pinigas;
+                    IB[k] = 0;
+                    IB[k] += kiekis;
+                    k++;
+                }
+            }
+            pagalb = 0;
+            bank -= kiekis;
+        }
+    }
+}
+int Suma(int k, int B[], int IB[]){
+    int sum = 0;
+ 
+    for(int i = 0; i < k; i++){
+        sum += B[i] * IB[i];
+    }
+    return sum;
+}
+void Rezultatas(int kbank, int k, int B[], int IB[]){
+    cout << kbank << endl;
+    for(int i = 0; i < k; i++){
+        if(i == k-1){
+            cout << B[i] << " * " << IB[i];
+        }else{
+            cout << B[i] << " * " << IB[i] << " + ";
+        }
+    }
+    cout << " = " << Suma(k, B, IB)<<endl;
+}
