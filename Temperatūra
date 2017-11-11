@@ -1,0 +1,122 @@
+//Temperatūra
+#include <iomanip>
+#include <iostream>
+
+using namespace std;
+void Skaitymas(int &n, int &t, int TEMP[], int ITEMP[], int &k);
+int Did(int k, int t, int TEMP[], int ITEMP[]);
+int Dazn(int k, int TEMP[], int ITEMP[], int pasikart[], int &paskiek);
+void Rezultatas(int k, int TEMP[], int ITEMP[], int t);
+ 
+int main()
+{
+    setlocale(LC_ALL, "Lithuanian");
+ 
+    int n; // dienų skaičius
+    int t; // pasirinkta temeperatūra pagal kurią bus tikrinamas kitos temepratūros
+    int TEMP[100]; // skirtingų temperatūrų masyvas
+    int ITEMP[100]; // kiek kartų temepratūra kartojosi masyvas
+    int k = 0; // skirtingų temperatūrų skaičius
+    int pagal = 0; // padės rikiuojant temperatūras didėjimo tvarka
+ 
+    Skaitymas(n, t, TEMP, ITEMP, k);
+ 
+    for(int i = 0; i < k; i++){
+        for(int j = i; j < k; j++){
+            if(TEMP[i] > TEMP[j]){
+                pagal = TEMP[i];
+                TEMP[i] = TEMP[j];
+                TEMP[j] = pagal;
+ 
+                pagal = ITEMP[i];
+                ITEMP[i] = ITEMP[j];
+                ITEMP[j] = pagal;
+            }
+        }
+    }
+ 
+    Rezultatas(k, TEMP, ITEMP, t);
+ 
+    return 0;
+}
+ 
+void Skaitymas(int &n, int &t, int TEMP[], int ITEMP[], int &k){
+    int sk; // įvesta temperatūra
+    int pagalb = 0;
+ 
+
+    cin >> n;
+    while((n <= 0) || (n > 30)){
+
+        cin >> n;
+    }
+
+    cin >> t;
+    while((t < 0) || (t > 30)){
+
+        cin >> t;
+    }
+ 
+    for(int i = 0; i < n; i++){
+        cin >> sk;
+        if(k == 0){
+            TEMP[k] = sk;
+            ITEMP[k] = 0;
+            ITEMP[k]++;
+            k++;
+        }else{
+            for(int j = 0; j < k; j++){
+                if(TEMP[j] == sk){
+                    ITEMP[j]++;
+                    pagalb++;
+                }
+            }
+            if(pagalb == 0){
+                TEMP[k] = sk;
+                ITEMP[k] = 0;
+                ITEMP[k]++;
+                k++;
+            }
+        }
+        pagalb = 0;
+    }
+ 
+}
+ 
+int Did(int k, int t, int TEMP[], int ITEMP[]){
+    int didesne = 0;
+ 
+    for(int i = 0; i < k; i++){
+        if(TEMP[i] > t){
+            didesne += ITEMP[i];
+        }
+    }
+ 
+    return didesne;
+}
+ 
+int Dazn(int k, int TEMP[], int ITEMP[]){
+    int dazn = 0;
+ 
+    for(int i = 0; i < k; i++){
+        if(ITEMP[i] > dazn){
+            dazn = ITEMP[i];
+        }
+    }
+    return dazn;
+}
+ 
+void Rezultatas(int k, int TEMP[], int ITEMP[], int t){
+    int skaic = Dazn(k, TEMP, ITEMP);
+ 
+    for(int i = 0; i < k; i++){
+        cout << TEMP[i] << " " << ITEMP[i] << " ";
+    }
+    cout << endl << Did(k, t, TEMP, ITEMP) << endl;
+ 
+    for(int i = 0; i < k; i++){
+        if(ITEMP[i] == skaic){
+            cout << TEMP[i] << " " << ITEMP[i] << " ";
+        }
+    }
+}
