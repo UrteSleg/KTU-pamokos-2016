@@ -1,0 +1,86 @@
+//Sodininko derlius
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <fstream>
+
+using namespace std;
+//-----------------------------------------------------------------------------------------------------------------------------------------
+void Skaitymas(int V[], double VK[], int & v, int S[], double SK[], int & s,
+               int O[], double OK[], int & o, int K[], double KK[], int & k,
+               int Visi[], double VisuKaina[], int & n);
+int Kiek (int Kiekis[], int n);
+double Suma (int Kiekis[], double Kaina[], int n);
+void Rasymas (int Kiekis[], double Kaina[], int n, string vaisius);
+//-----------------------------------------------------------------------------------------------------------------------------------------
+int main ()
+{
+   int V[100], S[100], O[100], K[100], Visi[100];
+   double VK[100], SK[100], OK[100], KK[100], VisuKaina[100];
+   int v, s, o, k, n;
+   Skaitymas(V, VK, v, S, SK,s, O, OK, o, K, KK, k, Visi, VisuKaina, n);
+   Rasymas(V, VK, v, "VYSNIOS");
+   Rasymas(S, SK, s, "SLYVOS");
+   Rasymas(O, OK, o, "OBUOLIAI");
+   Rasymas(K, KK, k, "KRIAUSES");
+   Rasymas(Visi, VisuKaina, n, "VISI VAISIAI");
+   return 0;
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------
+void Skaitymas(int V[], double VK[], int & v, int S[], double SK[], int & s,
+               int O[], double OK[], int & o, int K[], double KK[], int & k,
+               int Visi[], double VisuKaina[], int & n)
+{
+    v = 0; s = 0; o = 0; k = 0;
+    char koks;
+    cin >> n;
+    for (int i = 0; i < n; i++){
+        cin >> koks >> Visi[i] >> VisuKaina [i];
+        if (koks == 'v'){
+            V[v] = Visi[i];
+            VK[v] = VisuKaina[i];
+            v++;
+        }
+        else if (koks == 's'){
+                S[s] = Visi[i];
+                SK[s] = VisuKaina[i];
+                s++;
+        }
+            else if (koks == 'o'){
+                    O[o] = Visi[i];
+                    OK[o] = VisuKaina[i];
+                    o++;
+            }
+                else {
+                    K[k] = Visi[i];
+                    KK[k] = VisuKaina[i];
+                    k++;
+                }
+    }
+}
+
+int Kiek (int Kiekis[], int n)
+{
+  int k=0;
+   for (int i=0; i<n; i++)
+      k+=Kiekis[i];
+  return k;
+}
+double Suma (int Kiekis[], double Kaina[], int n)
+{
+   double s=0;
+   for (int i=0; i<n; i++)
+      s+=Kiekis[i]*Kaina[i];
+   return s;
+}
+void Rasymas (int Kiekis[], double Kaina[], int n, string vaisius){
+   cout << vaisius << ":" << endl;
+   if (n > 0)
+   {
+       cout << "Is viso parduota, kg: " << Kiek(Kiekis, n) << endl;
+       cout << "Parduota uz suma, Eur: " << fixed << setprecision(2) << Suma(Kiekis, Kaina, n) << endl;
+       cout << "Vidutine kilogramo kaina, Eur: " << fixed << setprecision(2)
+            << Suma(Kiekis, Kaina, n) / Kiek(Kiekis, n) << endl;
+   }
+   else cout << "neprekiavo" << endl;
+}
