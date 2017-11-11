@@ -1,0 +1,57 @@
+//Vampyro skaičiai
+#include <iostream>
+
+using namespace std;
+
+bool ArNevienodi (int x);
+
+void Iltys (int x, int sk1, int sk2, int sk3, int sk4);
+
+int main ()
+{
+   //Kintamųjų aprašai ir pradinių duomenų įvedimas
+   int m , n; 
+   cin >> m >> n;
+   //Programos veiksmai
+   for (int x = m; x <= n; x++)
+   if (ArNevienodi(x)){
+    int sk1 = x / 1000;
+    int sk2 = ( x / 100 ) % 10;
+    int sk3 = ( x / 10 ) % 10;
+    int sk4 =  x % 10;
+    Iltys(x, sk1, sk2, sk3, sk4);
+    Iltys(x, sk1, sk2, sk4, sk3);
+    Iltys(x, sk1, sk3, sk2, sk4);
+    Iltys(x, sk1, sk3, sk4, sk2);
+    Iltys(x, sk1, sk4, sk2, sk3);
+    Iltys(x, sk1, sk4, sk3, sk2);
+    Iltys(x, sk2, sk1, sk4, sk3); 
+    Iltys(x, sk2, sk1, sk3, sk4);
+    Iltys(x, sk3, sk1, sk2, sk4);
+    Iltys(x, sk3, sk1, sk4, sk2);
+    Iltys(x, sk4, sk1, sk2, sk3);
+    Iltys(x, sk4, sk1, sk3, sk2);
+   }
+   return 0;
+}
+//Funkcija ArNevienodi
+bool ArNevienodi (int x)
+{
+   int sk1 = x / 1000;
+   int sk2 = ( x / 100 ) % 10;
+   int sk3 = ( x / 10 ) % 10;
+   int sk4 =  x % 10;
+   if ((sk1==sk2||sk1==sk3||sk4==sk1)||(sk2==sk3||sk2==sk4)||(sk3==sk4)) return false;
+   else return true;
+}
+//Funkcija Iltys
+void Iltys (int x, int sk1, int sk2, int sk3, int sk4)
+{
+   int a=(sk1*10+sk2)*(sk3*10+sk4);
+   if (x == a)
+   {
+      cout << x << " ";
+      if(sk1*10+sk2<sk3*10+sk4) cout <<sk1*10+sk2<< " "<<sk3*10+sk4<< endl;
+      else cout <<sk3*10+sk4<<" "<<sk1*10+sk2<< endl;
+   } 
+}
