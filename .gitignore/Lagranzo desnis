@@ -1,0 +1,27 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+
+using namespace std;
+
+bool ArGalima(int sk1, int sk2, int sk3, int sk4, int x);
+
+int main()
+{
+    int x, a, b, c, d, sk1, sk2, sk3, sk4;
+    cin >> x;
+    for (a = 0, sk1 = x; a * a <= sk1; a++)
+        for (b = 0, sk2 = sk1 - a * a; b * b <= sk2; b++)
+            for (c = 0, sk3 = sk2 - b * b; c * c <= sk3; c++)
+                for (d = 0, sk4 = sk3- c * c; d * d <= sk4; d++)
+                    if (d * d == sk4)
+                        {
+                        cout << a << " " << b << " " << c << " " << d <<endl;
+                        }
+    return 0;
+}
+bool ArGalima(int sk1, int sk2, int sk3, int sk4, int x)
+{
+   if(sk1*sk1+sk2*sk2+sk3*sk3+sk4*sk4==x)return true;
+   else return false;
+}
