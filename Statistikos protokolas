@@ -1,0 +1,128 @@
+//Statistikos protokolas
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <fstream>
+#include <string>
+
+using namespace std;
+void Ivedimas(int &n, int Nr[],int S[]);
+int Vidurkis(int n, int S[]);
+void Rezultatai(int n, int Nr[], int S[]);
+ 
+int main()
+{
+    setlocale(LC_ALL, "Lithuanian");
+ 
+    int n; // žaidėjų skaičius
+    int Nr[100]; // žaidėjų numerių masyvas
+    int S[100]; // žaidėjų laikų masyvas
+    int pagalb = 0; // padės sukeičiant didėjimo tvarka
+ 
+    Ivedimas(n, Nr, S);
+ 
+    for(int i = 0; i < n; i++){
+        for(int j = i; j < n; j++){
+            if(Nr[i] > Nr[j]){
+                pagalb = Nr[i];
+                Nr[i] = Nr[j];
+                Nr[j] = pagalb;
+ 
+                pagalb = S[i];
+                S[i] = S[j];
+                S[j] = pagalb;
+            }
+        }
+    }
+ 
+    Rezultatai(n, Nr, S);
+ 
+   return 0;
+}
+ 
+void Ivedimas(int &n, int Nr[], int S[]){
+    int M[40]; // minutės
+    int Sk[40]; // sekundės
+    int a; // žaidėjo išėjimų į aikštelę kartai
+    int taspats = 0;
+ 
+    cin >> n;
+    while((n <= 0) || (n > 12)){
+ 
+        cin >> n;
+    }
+ 
+    for(int i = 0; i < n; i++){
+        cin >> Nr[i];
+ 
+        for(int b = 0; b < i; b++){
+            if(Nr[b] == Nr[i]){
+                taspats++;
+            }
+        }
+        while((taspats > 0) || (Nr[i] < 4) || (Nr[i] > 16)){
+            taspats = 0;
+            cin >> Nr[i];
+ 
+            for(int b = 0; b < i; b++){
+                if(Nr[b] == Nr[i]){
+                    taspats++;
+                }
+            }
+        }
+ 
+   
+        cin >> a;
+ 
+        S[i] = 0;
+ 
+     
+ 
+        for (int j = 0; j < a; j++){
+            for(int k = 0; k < 2; k++)
+                cin >> M[k] >> Sk[k];
+ 
+            S[i] += (M[1] * 60 + Sk[1] - M[0] * 60 - Sk[0]);
+        }
+    }
+}
+ 
+int Vidurkis(int n, int S[]){
+    int suma = 0;
+ 
+    for(int i = 0; i < n; i++){
+        suma += S[i];
+    }
+ 
+    int y = suma / n;
+ 
+    return y;
+}
+ 
+void Rezultatai(int n, int Nr[], int S[]){
+    int vid = Vidurkis(n, S);
+    int mins = 0; // minutës
+    int secs = 0; // sekundës
+ 
+    if(vid > 60){
+        while(vid > 60){
+            mins = vid / 60;
+            vid = vid - mins * 60;
+            secs = vid;
+        }
+    }
+ 
+    cout << "Vidutiniškai žaista " << mins << " min " << secs << " sec" << endl;
+ 
+    for(int i = 0; i < n; i++){
+        if(S[i] > 60){
+            while(S[i] > 60){
+                mins = S[i] / 60;
+                S[i] = S[i] - mins * 60;
+                secs = S[i];
+            }
+        }
+        cout << Nr[i] << " numeris žaidė " << mins << " min " << secs << " sec " << endl;
+ 
+    }
+}
