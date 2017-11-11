@@ -1,0 +1,141 @@
+//Virtualios realybės akiniai
+#include <iostream>
+#include <iomanip>
+#include <string>
+
+using namespace std;
+//---------------------------------------------------------
+void ivedimas(int & n, int & m, int & p, string pvardai[], int atseilnr[], string nvardai[]);
+void rikiavimas(string pvardai[], int n);
+void isvedimas(string pvardai[], int n, int a);
+void Trinti(int & n, int m, int atseilnr[], string pvardai[], string kopijaVardai[]);
+void Iterpimas(int & n, int p, string pvardai[], string nvardai[]);
+
+
+
+
+
+//---------------------------------------------------------
+int main ()
+{
+ int n, m=0, p, atseilnr[100];
+    string pvardai[100], kopijaVardai[100], nvardai[100];
+ 
+    ivedimas(n, m, p, pvardai, atseilnr, nvardai);
+    rikiavimas(pvardai, n);
+    isvedimas(pvardai, n, 0);
+    for(int i = 0;i<n;i++)
+    {
+        kopijaVardai[i]=pvardai[i];
+    }
+    Trinti(n, m, atseilnr, pvardai, kopijaVardai);
+    isvedimas(pvardai, n, 1);
+    Iterpimas(n, p, pvardai, nvardai);
+    rikiavimas(pvardai, n);
+    isvedimas(pvardai, n, 2);
+
+   return 0;
+}
+
+//---------------------------------------------------------
+void ivedimas(int & n, int & m, int & p, string pvardai[], int atseilnr[], string nvardai[])
+{
+    cin >> n;
+    for(int i = 0;i<n;i++)
+    {
+        cin >> pvardai[i];
+    }
+    while(1)
+    {
+        cin >> atseilnr[m];
+        if(atseilnr[m]!=0)
+        {
+            m++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    cin >> p;
+    for(int i = 0;i<p;i++)
+    {
+        cin >> nvardai[i];
+    }
+}
+ 
+void rikiavimas(string pvardai[], int n)
+{
+    int k;
+    string c, maz;
+ 
+    for(int i = 0;i<n;i++)
+    {
+        maz=pvardai[i];
+        k=i;
+        for(int j = i+1;j<n;j++)
+        {
+            if(pvardai[j]<maz)
+            {
+                maz=pvardai[j];
+                k=j;
+            }
+        }
+        c=pvardai[i];
+        pvardai[i]=pvardai[k];
+        pvardai[k]=c;
+    }
+}
+ 
+void Trinti(int & n, int m, int atseilnr[], string pvardai[], string kopijaVardai[])
+{
+    int vieta, vt;
+ 
+    for(int i = 0;i<m;i++)
+    {
+        vt=atseilnr[i]-1;
+        for(int k=0;k<n;k++)
+        {
+            if(kopijaVardai[vt]==pvardai[k])
+            {
+                vieta=k;
+            }
+        }
+ 
+        for (int j = vieta; j < n; ++j)
+        {
+            pvardai[j] = pvardai[j + 1];
+        }
+        n--;
+    }
+}
+ 
+void isvedimas(string pvardai[], int n, int a)
+{
+    if(a==0)
+    {
+        cout << "Pradinis sąrašas:" << endl;
+    }
+    else if(a==1)
+    {
+        cout << "Sąrašas pašalinus atsisakiusius dalyvauti:" << endl;
+    }
+    else
+    {
+        cout << "Atnaujintas sąrašas:" << endl;
+    }
+    for(int i = 0;i<n;i++)
+    {
+        cout << pvardai[i] << endl;
+    }
+}
+ 
+void Iterpimas(int & n, int p, string pvardai[], string nvardai[])
+{
+    for(int i=0;i<p;i++)
+    {
+        pvardai[n]=nvardai[i];
+        n++;
+    }
+}
+
