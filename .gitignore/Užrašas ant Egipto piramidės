@@ -1,0 +1,39 @@
+//Užrašas ant Egipto piramidės
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <fstream>
+#include <string>
+
+using namespace std;
+//Funkcijų prototipai
+long DBD (long a, long b);
+long MBK (long a, long b);
+//------------------------------------------------
+int main ()
+{
+   long n, m;
+   //Kiti programos kintamieji, jei reikalingi
+   long pr=1;
+   cin >> n >> m;
+   //Programos veiksmai
+   for (int i=2; i<=m;i++)
+   {
+      pr=MBK(pr,i);
+      if (pr>=n) cout << i<<endl;
+   }
+
+   return 0;
+}
+//------------------------------------------------
+// Funkcijos
+   long DBD (long a, long b)
+{
+   if (b==0) return a;
+   else return DBD(b,a%b);
+}    
+  
+long MBK (long a, long b)
+{
+   return a/DBD(a,b)*b;
+}
