@@ -1,0 +1,97 @@
+//Detalių rūšiavimas
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <fstream>
+using namespace std;
+//---------------------------------------------------------------------------------------------------------------
+void Skaitymas(int & k, int & j, int & s, int & v, int K[], int & kd,
+               int J[], int & jd, int S[], int & sd, int V[], int & vd);
+int Suma(int D[], int d);
+void Rinkinys(int viso, int reikia, int & r, int & liko);
+int Kiek(int k, int j, int s, int v);
+void Rasymas(int D[], int d, int reikia, string kokia);
+//---------------------------------------------------------------------------------------------------------------
+int main ()
+{
+   int K[100], J[100], S[100], V[100];
+   int k, j, s, v, kd, sd, jd, vd;
+   Skaitymas(k, j, s, v, K, kd, J, jd, S, sd, V, vd);
+   Rasymas(K, kd, k, "K");
+   Rasymas(J, jd, j, "J");
+   Rasymas(S, sd, s, "S");
+   Rasymas(V, vd, v, "V");
+   int kr, jr, sr, vr, lieka;
+   Rinkinys(Suma(K, kd), k, kr, lieka);
+   Rinkinys(Suma(J, jd), j, jr, lieka);
+   Rinkinys(Suma(S, sd), s, sr, lieka);
+   Rinkinys(Suma(V, vd), v, vr, lieka);
+   cout << "Is viso galima sudaryti pilnu komplektu: " << Kiek(kr, jr, sr, vr) << endl;
+   return 0;
+}
+//---------------------------------------------------------------------------------------------------------------
+void Skaitymas(int & k, int & j, int & s, int & v, int K[], int & kd,
+               int J[], int & jd, int S[], int & sd, int V[], int & vd)
+{
+   kd=0; jd=0; sd=0; vd=0;
+   int n, z;
+   char m; 
+   cin>>k>>j>>s>>v;
+   cin>>n;
+   for (int i=0; i<n; i++)
+   {
+      cin>>m>>z;
+      if(m=='K')
+      {
+         K[kd] = z;
+         kd++;
+      }
+      else if(m=='J')
+      {
+         J[jd] = z;
+         jd++;
+      }
+      else if(m=='S')
+      {
+         S[sd]= z;
+         sd++;
+      }
+      else if (m=='V')
+      {
+         V[vd] = z;
+         vd++;
+      }
+   }   
+}
+int Suma(int D[], int d)
+{
+   int s=0;
+   for (int i=0; i<d; i++)
+      s+=D[i];
+   return s;
+}
+void Rinkinys(int viso, int reikia, int & r, int & liko)
+{
+   r=viso/reikia;
+   liko=viso%reikia;
+}
+int Kiek(int k, int j, int s, int v)
+{
+   int m=9999999;
+   if (k < m) m = k;
+   if (j < m) m = j;
+   if (s < m) m = s;
+   if (v < m) m = v;
+   return m; 
+}
+void Rasymas(int D[], int d, int reikia, string kokia)
+{
+   int s=Suma(D,d);
+   if(d>0)
+   {
+      cout<<"Yra "<<kokia<<" detaliu: "<<s <<endl;
+      cout<<"Is "<<kokia<<" detaliu galima sudaryti: "<<s/reikia<<" komplektai"<<endl;
+      cout<<"Lieka nepanaudotu: "<<s%reikia<<endl;
+   }
+   else cout<<"Yra "<<kokia<<" detaliu: "<<"nera"<<endl;
+}
