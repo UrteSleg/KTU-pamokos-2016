@@ -1,0 +1,54 @@
+//Juodasis penktadienis
+#include <iostream>
+
+using namespace std;
+//-----------------------------------------------
+//Funkcijų prototipai
+void Skaitymas(int & n, int zmones[]);
+int Geriausias(int a, int b[]);
+//-----------------------------------------------
+int main()
+{
+    int n, zmones[100], geriausias;
+    Skaitymas(n, zmones);
+    geriausias = Geriausias(n, zmones) -1;
+    if(geriausias > 0)
+    {
+        cout << geriausias<<endl;
+    }
+    else
+    {
+        cout << "nėra"<<endl;
+    }
+  return 0;
+}
+//-----------------------------------------------
+void Skaitymas(int & n, int zmones[])
+{
+    cin >> n;
+    for(int i = 0;i<n;i++)
+    {
+        cin >> zmones[i];
+    }
+}
+int Geriausias(int a, int b[])
+{
+    int g=0, sk=0, kartai=0;
+    for(int i = 0;i<a;i++)
+    {
+        sk=b[i];
+        for(int j = 0;j<a;j++)
+        {
+            if(b[j]==sk)
+            {
+                kartai++;
+            }
+        }
+        if(kartai == 1 && sk > g)
+        {
+            g=sk;
+        }
+       kartai=0;
+    }
+    return g;
+}
