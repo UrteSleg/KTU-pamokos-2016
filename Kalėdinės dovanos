@@ -1,0 +1,50 @@
+// Kalėdinės dovanos
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+//--------------------------------------------
+void Skaitymas (double K[], int & n);
+double Suma(double K[], int n);
+int Kiekis(double K[], int n, int k);
+//--------------------------------------------
+int main()
+{
+    double K[100];
+    int n, k;
+    Skaitymas(K, n);
+    double s = Suma(K, n);
+    double v = s / n;
+    cin >> k;
+    int kiek = Kiekis(K, n, k);
+    cout << fixed << setprecision(2) << "Visos dovanos kainavo: " << s << endl;
+    cout << fixed << setprecision(2) << "Vidutine dovanos kaina: " << v << endl;
+    cout << "Dovanu kiekis: " << kiek << endl;
+    return 0;
+}
+//--------------------------------------------
+void Skaitymas (double K[], int & n)
+{
+   cin>>n;
+   for (int i=0; i<n; i++)
+      cin>>K[i];
+}
+
+double Suma(double K[], int n)
+{
+   double s=0;
+   for (int i=0; i<n; i++)
+      s=s+K[i];
+   return s;
+}
+
+int Kiekis(double K[], int n, int k)
+{
+   int v=0,l;
+   for (int i=0; i<n; i++)
+   {
+      if (K[i]>k) v++ ;
+   }
+   return v;
+}
+
