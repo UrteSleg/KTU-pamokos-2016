@@ -1,0 +1,43 @@
+//Atspėk skaičių
+#include <iostream>
+#include <iomanip>
+#include <stdlib.h>
+
+using namespace std;
+void Skaiciavimai(int sugeneruotas, int sugalvotas, string & koks,
+                  int & spejimai, int max_spejimu, string & riba);
+
+int main ()
+{
+   int sugeneruotas = rand() % 100;
+   int spejimai = 0;
+   int max_spejimu;
+   int sugalvotas = -1;
+   string koks, riba;
+   //cout << sugeneruotas << endl;
+   cout << "Spėjimų skaičius: " << endl;
+   cin >> max_spejimu;
+   //Programos veiksmai
+   while ( sugalvotas != sugeneruotas&&spejimai<=max_spejimu-1)
+   {
+      cout <<"Įveskite sugalvotą skaičių: ";
+      cin>>sugalvotas; 
+      spejimai++;
+     if (sugalvotas<sugeneruotas) cout << "PER MAŽAS,";
+      else if (sugalvotas>sugeneruotas) cout << "PER DIDELIS,";
+        else if (sugalvotas==sugeneruotas) cout << "TINKAMAS,";
+       if (spejimai<=max_spejimu-1) cout<< " spėjimas "<<spejimai<<endl;
+      if (spejimai==max_spejimu) cout<< " spėjimas "<<spejimai<< " PASIEKTA SPĖJIMŲ RIBA"<<endl;
+   }
+
+   return 0;
+}
+//Funkcija, grąžinanti reikšmes per parametrus
+void Skaiciavimai(int sugeneruotas, int sugalvotas, string & koks,
+                  int & spejimai, int max_spejimu, string & riba)
+{
+   if (sugalvotas<sugeneruotas) cout << " PER MAŽAS " <<endl;
+   else if (sugalvotas>sugeneruotas) cout << " PER DIDELIS " <<endl;
+   else if (sugalvotas==sugeneruotas) cout << " TINKAMAS " <<endl;
+   else if (spejimai>max_spejimu) cout << " PASIEKTA SPĖJIMŲ RIBĄ " <<endl;
+      }
