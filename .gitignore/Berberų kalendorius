@@ -1,0 +1,46 @@
+//Berberų kalendorius
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <fstream>
+#include <string>
+
+using namespace std;
+//Funkcijų prototipai
+bool ArTeisingaDiena(int menuo, int diena);
+bool ArTeisingasMenuo(int menuo);
+string MetuLaikas(int menuo, int diena);
+//------------------------------------------------
+int main ()
+{
+   int menuo, diena;
+   cin >> menuo >> diena;
+   //Programos veiksmai
+   if ( !ArTeisingasMenuo(menuo)) cout<<"Įvesta neteisinga data"<<endl;
+   else if (!ArTeisingaDiena(menuo, diena)) cout << "Įvesta neteisinga data"<<endl;
+      else cout<<MetuLaikas(menuo, diena);
+   return 0;
+}
+//------------------------------------------------
+// Funkcijos
+
+bool ArTeisingasMenuo(int menuo)
+{
+   if(menuo>0&&menuo<13)return true;
+   else return false;
+}
+bool ArTeisingaDiena(int menuo, int diena)
+{
+   if (menuo==2&&diena>0 && diena<30) return true;
+   else if ((menuo==1||menuo==3||menuo==5||menuo==7||menuo==8||menuo==10||menuo==12) && diena<32) return true;
+        else  if ((menuo==4||menuo==6||menuo==9||menuo==11) && diena <31) return true;
+                else return false;
+}
+string MetuLaikas(int menuo, int diena)
+{
+    if ((menuo== 12&&diena>13)|| menuo==1|| menuo==2|| (menuo==3&&diena<14) ) return "Tagrest: žiema\n";
+   else if ((menuo == 3&&diena>13) || menuo==4|| menuo==5 ||( menuo==6&&diena<14)) return "Tafsut: pavasaris\n";
+         else if ((menuo == 6&&diena>13)|| menuo==7|| menuo==8 || (menuo==9&&diena<14) )    return "Iwilen: vasara\n";
+              else  if ((menuo == 9&&diena>13)|| menuo==10|| menuo==11|| (menuo== 12&&diena<14))   return "Amewan: ruduo\n";
+                    else return "Ivesta neteisinga data\n";
+       }
